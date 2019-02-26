@@ -34,9 +34,23 @@ server.get('/api/zoos', (req, res) => {
   })
 });
 
+// `GET /api/zoos/:id`
 
+// When the client makes a `GET` request to `/api/zoos/:id`, find the _zoo_ associated with the given `id`. Remember to handle errors and send the correct status code.
 
+ // retrieve a zoo by id:
 
+server.get('/api/zoos/:id', (req, res) => {
+ 
+  db('zoos')
+  .where({id: req.params.id})
+  .then(zoo => {
+    res.status(200).json(zoo)
+  })
+  .catch(error => {
+    res.status(500).json(error)
+  })
+});
 
 
 // When the client makes a `POST` request to this endpoint, a new _zoo_ should be created in the _zoos_ table.
@@ -65,7 +79,16 @@ db('zoos')
 })
 }); 
 
+// DELETE /api/zoos/:id
 
+// When the client makes a `DELETE` request to this endpoint, the _zoo_ that has the provided `id` should be removed from the database.
+
+// remove a zoo from the db:
+
+// server.delete('api/zoos/:id', (req, res) => {
+  
+//   res.send();
+// });
 
 
 const port = 3300;
