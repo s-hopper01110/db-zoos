@@ -102,6 +102,39 @@ db('zoos')
 })
 
 
+// PUT /api/zoos/:id
+
+// When the client makes a `PUT` request to this endpoint passing an object with the changes, the _zoo_ with the provided `id` should be updated with the new information.
+
+ // update a zoo:
+server.put('/api/zoos/:id', (req, res) => {
+ 
+ db('zoos')
+ .where({ id: req.params.id })
+ .update(req.body)
+ .then(response => { // data that you get back will be greater than 0 
+   if( response > 0 ) {
+     db('zoos')
+     .where({ id: req.params.id })
+     .first()
+     .then(zoo => {
+       res.status(200).json(zoo)
+     })
+   } else {
+     res.status(404).json({ message: 'Requested zoo not found. '})
+   }
+ })
+ .catch(error => {
+   res.status(500).json(error)
+ })
+}); 
+
+
+
+
+
+
+
 
 
 
