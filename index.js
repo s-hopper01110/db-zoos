@@ -85,10 +85,24 @@ db('zoos')
 
 // remove a zoo from the db:
 
-// server.delete('api/zoos/:id', (req, res) => {
-  
-//   res.send();
-// });
+server.delete('/api/zoos/:id', (req, res) => {
+db('zoos')
+.where({ id: req.params.id })
+.del()
+.then(response=> {
+  if ( response > 0 ) {
+    res.status(200).json({ message: 'The requested zoo has successfully been deleted.' })
+  }else{
+    res.status(404).json({ message: 'Requested zoo cannot be found' })
+}
+})
+.catch(err => {
+  res.status(500).json(err)
+  })
+})
+
+
+
 
 
 const port = 3300;
